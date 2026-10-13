@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUSWEB-DB</title>
+    <!-- Font Awesome for icons (free version) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .main-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            box-shadow: 0 30px 50px -20px rgba(0, 20, 40, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+            padding: 2.5rem 2.5rem 3rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Header section: logo + timestamp */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 80, 130, 0.12);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 3.2rem;
+            color: #0b4f6c;
+            filter: drop-shadow(0 6px 8px rgba(11, 79, 108, 0.18));
+            transition: transform 0.2s;
+        }
+
+        .logo-icon:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0b4f6c 0%, #1b7b9e 70%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 4px 12px rgba(0, 60, 90, 0.1);
+        }
+
+        .timestamp {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a4b64;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            padding: 0.7rem 1.6rem;
+            border-radius: 60px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02), 0 0 0 1px rgba(255, 255, 255, 0.8) inset, 0 6px 16px -8px rgba(0, 60, 90, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            letter-spacing: 0.01em;
+        }
+
+        .timestamp i {
+            color: #1f7a9c;
+            font-size: 1.1rem;
+        }
+
+        /* Body: 4 icon cards */
+        .body-icons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .icon-card {
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 2rem 1.2rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 12px 28px -10px rgba(0, 40, 60, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.9) inset, 0 0 0 1px rgba(0, 70, 110, 0.06);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 40px -12px rgba(0, 70, 120, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.9) inset, 0 0 0 1px rgba(0, 120, 180, 0.2);
+            background: #fffffffc;
+        }
+
+        .icon-wrapper {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(145deg, #ecf6fc, #d9e9f5);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 18px -8px rgba(0, 70, 120, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+            transition: all 0.2s;
+        }
+
+        .icon-card:hover .icon-wrapper {
+            background: linear-gradient(145deg, #e1f0fa, #cbe2f0);
+        }
+
+        .icon-wrapper i {
+            font-size: 3.4rem;
+            color: #17698b;
+            filter: drop-shadow(0 4px 6px rgba(0, 70, 110, 0.15));
+        }
+
+        .icon-label {
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: -0.01em;
+            color: #0e3e54;
+            margin-bottom: 0.25rem;
+            word-break: break-word;
+        }
+
+        .icon-sub {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #4a7c94;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            opacity: 0.8;
+        }
+
+        /* Small extra details - subtle */
+        .footer-note {
+            margin-top: 2.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #618a9e;
+            letter-spacing: 0.02em;
+            opacity: 0.75;
+            border-top: 1px solid rgba(0, 70, 110, 0.08);
+            padding-top: 1.5rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 850px) {
+            .main-card {
+                padding: 1.8rem;
+            }
+            .body-icons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.4rem;
+            }
+            .logo-text {
+                font-size: 2rem;
+            }
+            .logo-icon {
+                font-size: 2.6rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .timestamp {
+                font-size: 0.9rem;
+                padding: 0.5rem 1.2rem;
+            }
+            .body-icons {
+                grid-template-columns: 1fr;
+            }
+            .main-card {
+                border-radius: 2rem;
+                padding: 1.5rem;
+            }
+            .icon-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+            .icon-wrapper i {
+                font-size: 3rem;
+            }
+        }
+
+        /* custom style for each icon colour to differentiate but keep cohesive */
+        .icon-card[data-icon="AP-DB"] .icon-wrapper i {
+            color: #2a6d8c;
+        }
+        .icon-card[data-icon="ShopWatu"] .icon-wrapper i {
+            color: #1f7a5c;
+        }
+        .icon-card[data-icon="DP-DB"] .icon-wrapper i {
+            color: #9b5e3c;
+        }
+        .icon-card[data-icon="NUSAPPSTOR-DB"] .icon-wrapper i {
+            color: #7e5a9e;
+        }
+
+        /* give subtle colour to each wrapper background? optional but adds variety */
+        .icon-card[data-icon="ShopWatu"] .icon-wrapper {
+            background: linear-gradient(145deg, #e7f3ef, #d2e8e0);
+        }
+        .icon-card[data-icon="DP-DB"] .icon-wrapper {
+            background: linear-gradient(145deg, #f6ede7, #eeddd2);
+        }
+        .icon-card[data-icon="NUSAPPSTOR-DB"] .icon-wrapper {
+            background: linear-gradient(145deg, #efeaf6, #e2d9ee);
+        }
+        /* AP-DB remains default blueish */
+
+        /* Special styling for the linked AP-DB card */
+        .icon-card[data-icon="AP-DB"] {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-card[data-icon="AP-DB"]::after {
+            content: "↗";
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            font-size: 1rem;
+            color: #2a6d8c;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .icon-card[data-icon="AP-DB"]:hover::after {
+            opacity: 1;
+            transform: translate(2px, -2px);
+        }
+
+        /* Optional: subtle animated glow on hover for the linked card */
+        .icon-card[data-icon="AP-DB"]:hover .icon-wrapper {
+            box-shadow: 0 12px 22px -8px rgba(42, 109, 140, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <!-- Header with NWDB logo and live timestamp -->
+        <div class="header">
+            <div class="logo-area">
+                <!-- NWDB logo as an icon (database + network symbol) - using fontawesome stacked -->
+                <div class="logo-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="logo-text">NWDB</div>
+            </div>
+            <div class="timestamp" id="timestamp">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="dateTimeDisplay">--/--/---- --:--:--</span>
+            </div>
+        </div>
+
+        <!-- Body: 4 distinct icons -->
+        <div class="body-icons">
+            <!-- AP-DB icon card - now a link to AfriPay Admin Dashboard -->
+            <a href="https://aminejalloh-io.github.io/AP-DB/" target="_blank" rel="noopener noreferrer" class="icon-card" data-icon="AP-DB">
+                <div class="icon-wrapper">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="icon-label">AP-DB</div>
+                <div class="icon-sub">AfriPay Dashboard</div>
+            </a>
+
+            <!-- ShopWatu icon card -->
+            <div class="icon-card" data-icon="ShopWatu">
+                <div class="icon-wrapper">
+                    <i class="fas fa-store-alt"></i>
+                </div>
+                <div class="icon-label">ShopWatu</div>
+                <div class="icon-sub">commerce</div>
+            </div>
+
+            <!-- DP-DB icon card -->
+            <div class="icon-card" data-icon="DP-DB">
+                <div class="icon-wrapper">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="icon-label">DP-DB</div>
+                <div class="icon-sub">data pipeline</div>
+            </div>
+
+            <!-- NUSAPPSTOR-DB icon card (name longer, adjust letter spacing) -->
+            <div class="icon-card" data-icon="NUSAPPSTOR-DB">
+                <div class="icon-wrapper">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="icon-label">NUSAPPSTOR-DB</div>
+                <div class="icon-sub">app repository</div>
+            </div>
+        </div>
+
+        <!-- subtle footer note (optional) -->
+        <div class="footer-note">
+            <i class="fas fa-shield-alt" style="margin-right: 6px; opacity: 0.7;"></i> NUSWEB-DB • unified data ecosystem
+        </div>
+    </div>
+
+    <script>
+        // Function to update date and time stamp in real time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date as DD/MM/YYYY
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // January is 0
+            const year = now.getFullYear();
+            
+            // Format time as HH:MM:SS
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const formattedDateTime = `${day}/${month}/${year}  ${hours}:${minutes}:${seconds}`;
+            
+            // Update the display
+            const displayElement = document.getElementById('dateTimeDisplay');
+            if (displayElement) {
+                displayElement.textContent = formattedDateTime;
+            }
+        }
+
+        // Initial call to display immediately
+        updateDateTime();
+        
+        // Update every second (1000ms)
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
